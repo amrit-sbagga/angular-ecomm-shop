@@ -7,6 +7,13 @@ import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { StoreComponent } from './components/store/store.component';
+import { FilterComponent } from './components/filter/filter.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
+import { UserOrdersComponent } from './components/user-orders/user-orders.component';
+import { CartComponent } from './components/cart/cart.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +21,14 @@ import { FooterComponent } from './components/footer/footer.component';
     HomeComponent,
     ProfileComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    StoreComponent,
+    FilterComponent,
+    ProductCardComponent,
+    UserOrdersComponent,
+    CartComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
