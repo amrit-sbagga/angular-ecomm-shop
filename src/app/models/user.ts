@@ -5,3 +5,4 @@ export interface User {
     phone: number;
     isAdmin ?: boolean
 }
+//jsontots.com

@@ -1,4 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user/user.service';
 import { User } from '../../models/user';
 
 @Component({
@@ -8,7 +10,10 @@ import { User } from '../../models/user';
 })
 export class SignupComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService : UserService) { }
+
+  error
+  success
 
   ngOnInit(): void {
   }
@@ -31,6 +36,21 @@ export class SignupComponent implements OnInit {
 
     console.log({
       user
+    });
+
+    this.userService.signup(user).subscribe(
+      {
+      next : (result : {message: string}) => {
+        console.log(result);
+        this.success = result.message;
+        this.error = undefined;
+        form.reset();
+      },
+      error : (response: HttpErrorResponse) => {
+        console.log(response);
+        this.error = response.error.error.message;
+        this.success = undefined;
+      }
     })
    
   }
