@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 import { User } from '../../models/user';
 
@@ -10,7 +11,7 @@ import { User } from '../../models/user';
 })
 export class SignupComponent implements OnInit {
 
-  constructor(private userService : UserService) { }
+  constructor(private userService : UserService, private router : Router) { }
 
   error
   success
@@ -18,10 +19,11 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  signup(event : Event){
-    event.preventDefault();
-    console.log(event.target);
-    let form = <HTMLFormElement>event.target;
+  navigateToLoginPage(){
+    this.router.navigate(['login']);
+  }
+
+  readValuesFromForm(form : HTMLFormElement){
     let name = (<HTMLInputElement>form.elements.namedItem("name")).value;
     let email = (<HTMLInputElement>form.elements.namedItem("email")).value;
     let password = (<HTMLInputElement>form.elements.namedItem("password")).value;
@@ -34,10 +36,10 @@ export class SignupComponent implements OnInit {
       phone : parseInt(phoneStr)
     }
 
-    console.log({
-      user
-    });
+    return user;
+  }
 
+  createUser(user : User, form : HTMLFormElement){
     this.userService.signup(user).subscribe(
       {
       next : (result : {message: string}) => {
@@ -45,6 +47,8 @@ export class SignupComponent implements OnInit {
         this.success = result.message;
         this.error = undefined;
         form.reset();
+        //navigate to login page
+        this.navigateToLoginPage();
       },
       error : (response: HttpErrorResponse) => {
         console.log(response);
@@ -52,6 +56,17 @@ export class SignupComponent implements OnInit {
         this.success = undefined;
       }
     })
+  }
+
+  signup(event : Event){
+    event.preventDefault();
+    console.log(event.target);
+    let form = <HTMLFormElement>event.target;
+
+    let user = this.readValuesFromForm(form);
+    console.log({user});
+
+     this.createUser(user, form);
    
   }
 
